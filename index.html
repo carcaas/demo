@@ -1,0 +1,248 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<link rel="stylesheet" href="libs/leaflet-0.7/L.Control.Locate.css" />
+	<link href="css/index.css" rel="stylesheet">
+    <link href="libs/leaflet-0.7/leaflet.css" rel="stylesheet"/>
+	<link href="libs/jquery.mobile-1.4.0.min.css" rel="stylesheet"/>
+		<script type="text/javascript" charset="utf-8" src="libs/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="libs/jquery.mobile-1.4.0.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="libs/jquery.mobile-1.4.0.min.map"></script>
+</head>
+	<!-- CCA. No llamamos al evento si no que dejamos que lance el evento el propio teléfono -->
+	<!--<body onload="onDeviceReady();loaded();">-->
+	<body onload="loaded();">
+		<div data-role="page" id="one">
+			<div id="cabecera" data-role="header" data-position="inline">
+				<div style="float:left; vertical-align: middle;">
+					<img src="js/logo.png" style="height: 3em; with:2em; padding-left: 5px;padding-top: 2px;" />			
+					<img src="js/linea.png" style="height: 3em; with:2em; padding-left: 5px;padding-top: 3px;" />			
+				</div>
+				<div style="float:right;" style="text-align:right;" >
+					<a href="#two" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all">No text</a>
+				</div>
+				
+				<div style="text-align:center;" >
+					<img id="imgTitulo" src="js/titulo.png" style="height: 3em ;padding-left: -50px;padding-top: 2px;"  />
+				</div>
+			</div>
+			<div id="map_canvas" class="map" ></div>
+		</div>
+
+		
+		<div data-role="page" id="two" data-theme="a">
+			<div data-role="header" data-position="inline">
+				<div style="float:left; vertical-align: middle;">
+					<img src="js/logo.png" style="height: 3em; with:2em; padding-left: 5px;padding-top: 2px;" />			
+					<img src="js/linea.png" style="height: 3em; with:2em; padding-left: 5px;padding-top: 3px;" />			
+				</div>
+				<div style="float:right;" style="text-align:right;" >
+					<a onclick="cambiarDimensiones()" href="#one" class="ui-btn ui-icon-back ui-btn-icon-notext ui-corner-all" style="padding-right: 5px; padding-top: 2px;">No text</a>
+				</div>
+				
+				<div style="text-align:center;" >
+					<img id="imgTitulo" src="js/titulo.png" style="height: 3em ;padding-left: -50px;padding-top: 2px;"  />
+				</div>
+			</div>
+			<!-- /header -->
+			<div id="wrapper">
+				<div id="scroller">
+					 <div data-role="content">
+						<div style="text-align:center;" >
+							<img src="img/publicidad.png" alt="" style="max-width:100%;max-height:95%;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /page two -->
+		
+	</body>
+	
+	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/bbdd.js"></script>
+    <script type="text/javascript" charset="utf-8" src="libs/leaflet-0.7/leaflet.js"></script>
+	<script type="text/javascript" charset="utf-8" src="libs/leaflet-0.7/L.Control.Locate.js" ></script>
+	<script type="text/javascript" charset="utf-8" src="libs/iscroll.js"></script>
+	<script type="application/javascript" src="libs/fastclick.js"></script>
+
+</html>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		//document.addEventListener("deviceready", fGetLocationDeviceReady, false);
+		
+		document.addEventListener("deviceready", function(e) {
+		navigator.splashscreen.show();
+		window.setTimeout(function() {
+			navigator.splashscreen.hide();
+			},2000);
+			onDeviceReady();
+		}, "false");
+		
+		//for testing in Chrome browser uncomment
+		//onDeviceReady();
+		
+		FastClick.attach(document.body);
+	});
+	
+	var myScroll;
+
+	function loaded () {
+		myScroll = new IScroll('#wrapper', { mouseWheel: true });
+	}
+	
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+	$("#two").on( "pageshow", function( event ) {
+		
+		myScroll = new IScroll('#wrapper', { mouseWheel: true });
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	 });
+
+	function cambiarDimensiones(){
+		fRecargarCapas();
+	}
+	
+	$(window).resize(function() {
+		$('#map_canvas').height(($("body").height()-$("#cabecera").height()));	
+		fRecargarCapas();		
+	});
+	
+	$("#one").on("pageshow",function(event, ui){
+		if(map!=null){
+			map.invalidateSize(true);
+			//map.fire('resize');
+		}	
+			console.debug("Antes de resize pageshow");			
+	});
+
+</script> 
+
+<style type="text/css">
+
+
+.ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
+background: #ffcc00;
+border-color: #222;
+color: #333;
+text-shadow: 0 0px 0 #f3f3f3;
+}
+
+
+.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit {
+background: #ffcc00;
+border-color: #ddd;
+color: #333;
+text-shadow: 0 1px 0 #eee;
+font-weight: 700;
+}
+
+ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
+color: #333;
+text-shadow: none;
+}
+
+
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	-ms-touch-action: none;
+}
+
+body,ul,li {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+body {
+
+	overflow: hidden; /* this is important to prevent the whole page to bounce */
+}
+
+#header {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 55px;
+	line-height: 45px;
+	background: #CD235C;
+	padding: 0;
+	color: #eee;
+	font-size: 20px;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+#wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 55px;
+	bottom: 10px;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+}
+#footer {
+	position: absolute;
+	z-index: 2;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 48px;
+	background: #444;
+	padding: 0;
+	border-top: 1px solid #444;
+}
+
+#scroller {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
+#scroller ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	text-align: left;
+}
+
+#scroller li {
+	padding: 0 10px;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #fff;
+	background-color: #fafafa;
+	font-size: 14px;
+}
+
+</style>
