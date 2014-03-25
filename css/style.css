@@ -1,0 +1,134 @@
+body,ul,li {
+	padding:0px;
+	margin:0;
+}
+
+body {
+	-webkit-user-select:none;
+    -webkit-text-size-adjust:none;
+	font-family:helvetica;
+	background-image:url(../images/fondo.jpg)
+}
+
+#wrapper {
+	width:100%;
+	float:left;
+	position:absolute;	/* On older OS versions "position" and "z-index" must be defined, */
+	z-index:1;			/* it seems that recent webkit is less picky and works anyway. */
+	overflow:hidden;
+	display:none;
+	top:45px;
+	bottom:48px
+}
+
+#scroller {
+	float:left;
+}
+
+#scroller ul {
+	list-style:none;
+	display:block;
+	float:left;
+	width:100%;
+}
+
+#scroller li {
+	display:block; 
+	float:left;
+	text-align:center;
+}
+
+#cabecera{
+	height:45px;
+	width:100%;
+	line-height: 45px;
+	top:0;
+	text-align:center;
+	background: rgba(60,152,195,1);
+	background: -moz-linear-gradient(top, rgba(60,152,195,1) 0%, rgba(48,123,158,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(60,152,195,1)), color-stop(100%, rgba(48,123,158,1)));
+	background: -webkit-linear-gradient(top, rgba(60,152,195,1) 0%, rgba(48,123,158,1) 100%);
+	background: -o-linear-gradient(top, rgba(60,152,195,1) 0%, rgba(48,123,158,1) 100%);
+	background: -ms-linear-gradient(top, rgba(60,152,195,1) 0%, rgba(48,123,158,1) 100%);
+	background: linear-gradient(to bottom, rgba(60,152,195,1) 0%, rgba(48,123,158,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c98c3', endColorstr='#307b9e', GradientType=0 );
+	color: #eee;
+	font-size: 14px;
+	line-height: 45px;
+	text-align: center;
+}
+	
+/*Inicio estilos de la cabecera*/
+#cabecera .btn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width:17%;
+    line-height: 36px;
+    background-color:#46b7f1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#cabecera .btn:active {
+    background-color:#0f6f91;
+}
+	
+	
+#pie{
+	bottom:0;
+	position:absolute;
+	height:48px;
+	width:100%;
+	background: rgba(254,254,254,1);
+	background: -moz-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(226,226,226,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(254,254,254,1)), color-stop(100%, rgba(226,226,226,1)));
+	background: -webkit-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(226,226,226,1) 100%);
+	background: -o-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(226,226,226,1) 100%);
+	background: -ms-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(226,226,226,1) 100%);
+	background: linear-gradient(to bottom, rgba(254,254,254,1) 0%, rgba(226,226,226,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#e2e2e2', GradientType=0 );
+}
+
+#loading  {
+	background:url(../images/cargando.png)  -16px -96px no-repeat;
+	display:block;
+	width:48px; height:48px;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+#contenedorcargando{
+	position:absolute;
+	width:100%;
+	top:45px;
+	bottom:48px;
+}
+
+#capacargando{
+	margin-top:50px;
+	margin-left:auto;
+	margin-right:auto;
+	padding:5px;
+	display:block;
+	width:48px; height:48px;
+	background-color:#e2e2e2;
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 0px solid #000000;
+}
+
+#debajo{
+    z-index: -100;
+}
